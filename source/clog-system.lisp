@@ -68,6 +68,7 @@ the same as the clog directy this overides the relative paths used in them.")
        (host             "0.0.0.0")
        (port             8080)
        (server           :hunchentoot)
+       (server-args      nil)
        (lack-middleware-list nil)
        (extended-routing nil)
        (long-poll-first  nil)
@@ -81,8 +82,9 @@ the same as the clog directy this overides the relative paths used in them.")
 default route to establish web-socket connections and static files located at
 STATIC-ROOT. The webserver used with CLACK can be chosen with :SERVER and
 middlewares prepended with :LACK-MIDDLEWARE-LIST, NOT supporting LACK.BUILDER
-DSL.  If EXTENDED-ROUTING is t routes will match even if extend with additional
-/ and additional paths. If LONG-POLLING-FIRST is t then long polling continues
+DSL.  Additional arguments to the server can be passed through SERVER-ARGS.
+If EXTENDED-ROUTING is t routes will match even if extend with additional /
+and additional paths. If LONG-POLLING-FIRST is t then long polling continues
 until the on-new-window-handler ends, if LONG-POLLING-FIRST is a number
 continues long polling until that number of queries to browser.
 LONG-POLLING-FIRST is used in webserver applications to enable crawling of your
@@ -103,6 +105,7 @@ see tutorial 12 for an example."
   (declare (ignorable host
                       port
                       server
+                      server-args
                       lack-middleware-list
                       extended-routing
                       long-poll-first

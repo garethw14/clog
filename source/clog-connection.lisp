@@ -388,6 +388,7 @@ the default answer. (Private)"
                      (host             "0.0.0.0")
                      (port             8080)
                      (server           :hunchentoot)
+                     (server-args      nil)
                      (lack-middleware-list nil)
                      (extended-routing nil)
                      (long-poll-first  nil)
@@ -400,7 +401,8 @@ the default answer. (Private)"
 default route for '/' to establish web-socket connections and static files
 located at STATIC-ROOT. The webserver used with CLACK can be chosen with
 :SERVER and middlewares prepended with :LACK-MIDDLEWARE-LIST,
-NOT supporting LACK.BUILDER DSL.
+NOT supporting LACK.BUILDER DSL. Additional arguments can be passed to the
+server through SERVER-ARGS. 
 If LONG-POLLING-FIRST is t, the output is sent as HTML instead of
 websocket commands until the end of the on-new-window-handler, if
 LONG-POLLING-FIRST is a number will keep long polling till that number of
@@ -548,7 +550,9 @@ the contents sent to the brower."
                       lack-middleware-list
                       :initial-value *app*
                       :from-end t))
-  (setf *client-handler* (clack:clackup *app* :server server :address host :port port))
+  (setf *client-handler* (apply #'clack:clackup *app*
+                                :server server :address host :port port
+                                server-args))
   (format t "HTTP listening on    : ~A:~A~%" host port)
   (format t "HTML root            : ~A~%"    static-root)
   (format t "Long poll first      : ~A~%"    (if long-poll-first
